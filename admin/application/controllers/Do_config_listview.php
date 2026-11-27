@@ -221,10 +221,7 @@ private function f_get_cookie($cookie_name)
  */		
 function index()
 	{				
-		if(get_check_permission(1))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+		$this->do_process();
 	}    
 			
 /**
@@ -555,7 +552,7 @@ private function do_business()
 		
 		// Xac dinh mang du lieu de hien thi tren view
 		$data['data_view']         			= $this->m_obj_data_view;
-		$data['menu'] 						= Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] 						= Fget_menu_html($this->m_nid_user_login);
 		
 		// Load view tuong ung voi su kien m_event.
 		$data['event'] 				= $this->m_event;

@@ -1,5 +1,5 @@
 <?php
-class products extends CI_Controller
+class Products extends CI_Controller
 {
     var $event = '';
     var $obj_products = '';

@@ -1,1 +1,221 @@
-<style>table td {vertical-align: middle !important;}.table td, .table th {    padding: 0.5rem !important;}.col-md-6.col-right .x_panel .x_content {height:403px;}.col-md-6.col-right .x_panel .x_content {	height:403px;	overflow-y: scroll;    overflow-x: hidden;}.x_panel {min-height:auto;}.col-md-6.col-right .x_panel .x_content .table {    height: 100%;}</style><style>.timeline::before {    content: none;}.timeline {    border-left: 1px solid #ddd;    border-bottom-right-radius: 4px;    border-top-right-radius: 4px;    margin: 0 auto;    letter-spacing: .2px;    position: relative;    line-height: 1.4em;    padding: 0 25px;    list-style: none;    text-align: left;}.timeline .event:last-of-type {    padding-bottom: 0;    margin-bottom: 0;    border: none;}.timeline .event {    position: relative;    padding-bottom: 15px;	border-bottom: 0;}.timeline .event.active:after {    background-image: url(<?php echo base_url(); ?>images/radio-on.svg);    background-size: 100%;    background-position: center;    margin: 0;    border: 1px solid red;    background-color: #fff;}.timeline .event:after {    position: absolute;    display: block;    left: -31px;    top: 3px;    background: #ddd;    border-radius: 50%;    height: 11px;    width: 11px;    content: "";    border: 1px solid #ddd;}.fa-clipboard {color:#999;}.fa-clipboard:hover {color:#dc3545;}</style><form name='form_main' id="form_main" method="post" action="<?php echo $link_page; ?>" enctype="multipart/form-data">			<div class="right_col" role="main">				<div class="">					<div class="page-title">						<div class="title_left">							<h3><small></small></h3>						</div>						<div class="title_right">													</div>					</div>					<div class="clearfix"></div>					<div class="row">						<div class="col-md-6 ">							<div class="x_panel">								<div class="x_title">									<h2>Thông tin khách hàng</small></h2>									<ul class="nav navbar-right panel_toolbox">										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>									</ul>									<div class="clearfix"></div>								</div>								<div class="x_content">										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Mã đơn hàng</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo $obj_order_view['ccode'] ?>" disabled="disabled">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Ngày tạo</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo Fview_date($obj_order_view['ddate01']) ?>">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Giờ tạo</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo $obj_order_view['ctime01'] ?>">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Khách hàng</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo $obj_order_view['cfullname']; ?>" name="cfullname">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Điện thoại</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo $obj_order_view['cphone']; ?>" name="cphone">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Địa chỉ</label>											<div class="col-md-9 col-sm-9 ">												<input type="text" class="form-control" disabled="disabled" placeholder="" value="<?php echo $obj_order_view['caddress'].' '.get_ward_name($obj_order_view['nid_ward']).' '.get_district_name($obj_order_view['nid_district']).' '.get_province_name($obj_order_view['nid_province']); ?>" name="caddress">											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-3 col-sm-3 ">Ghi chú</label>											<div class="col-md-9 col-sm-9 ">												<textarea class="form-control" disabled="disabled" name="cnote" style="height:100px;"><?php echo $obj_order_view['cnote']; ?></textarea>											</div>										</div>								</div>							</div>						</div>						<div class="col-md-6 col-right">							<div class="x_panel">								<div class="x_title">									<h2>Chi tiết đơn hàng</small></h2>									<ul class="nav navbar-right panel_toolbox">										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>									</ul>									<div class="clearfix"></div>								</div>								<div class="x_content">									<table class="table table-bordered table-hover" width="100%" cellspacing="0">										<thead>										   <tr style="background:#eee;">											  <th style="width:50px !important;">#</th>											  <th style="width:300px;">Sản Phẩm</th>											  <th style="width:100px;">Đơn Giá</th>											  <th style="width:50px;">SL</th>											  <th style="width:100px;">Thành Tiền</th>										   </tr>										</thead>										<tbody>										   <?php $i=1;										  $total = 0;$total_no_sale = 0;$total_sale = 0;										  foreach($obj_order_detail as $data) { 											if($data['niscolor']==1) {												   $color = get_color_byid($data['nid_product']);												   $product = get_product_byid($color['nid_product']);																								   if($color['fprice_sale'] < $color['fprice'] && $product['ncheck'] == 1) {														$price=$color['fprice_sale'];														$total_sale += ($color['fprice'] - $color['fprice_sale'])*$data['nquantity'];												   } else 														$price=$color['fprice'];																										$total_no_sale += $data['nquantity'] * $color['fprice'];											   } else {												   $product = get_product_byid($data['nid_product']);												 												   if($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) {														$price=$product['fprice_sale'];														$total_sale += ($product['fprice'] - $product['fprice_sale'])*$data['nquantity'];												   } else 														$price=$product['fprice'];																										$price=$data['cprice'];													$total_no_sale += $data['nquantity'] * $data['cprice'];											   }											//$price=$data['cprice'];											//$total_no_sale += $data['nquantity'] * $data['cprice'];																								$total += $data['nquantity'] * $price;										  ?>										   <tr>											  <td><?php echo $i; ?></td>											  <td class="text-left"><?php echo Fview_text($product['cproducts']) ?>											  <?php if($data['niscolor']==1) { ?>											   <br><span style="color:red;">(Chọn loại: <?php echo $color['cname']; ?>)</span>											   <?php } ?>											  </td>											  <td class="text-right">												 <?php 														echo Fview_text(number_format($price));												/*																if($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) 															echo '<br><del style="color: red;">'.Fview_text(number_format($product['fprice'])).'</del>';												*/														?>											  </td>											  <td class="text-right"><?php echo Fview_text($data['nquantity']) ?></td>											  											  <td class="text-right">												 <?php 														echo Fview_text(number_format($data['nquantity']*$price));													?>											  </td>										   </tr>											<?php $i++;} ?>												<?php /*												<tr>												  <td colspan="4" class="text-right"><b><?php echo "Tổng tiền (chưa giảm giá)" ?> : </b></td>												  <td class="text-right text-danger"><b><?php echo number_format($total_no_sale); ?></b></td>											   </tr>											   <tr>												  <td colspan="4" class="text-right"><b><?php echo "Giảm giá (khuyến mãi)" ?> : </b></td>												  <td class="text-right text-danger"><b>- <?php if($total_sale!=0) echo number_format($total_sale); else echo "0"; ?></b></td>											   </tr>											   */ ?>											   <tr>												  <td colspan="4" class="text-right"><b><?php echo "Giảm giá (MGG)" ?> : </b></td>												  <td class="text-right text-danger"><b>- <?php if($obj_order_view['cgiam_gia']!="") echo number_format($obj_order_view['cgiam_gia']); else echo "0"; ?></b></td>											   </tr>											   <tr>												  <td colspan="4" class="text-right"><b><?php echo "Tổng tiền phải trả" ?> : </b></td>												  <td class="text-right text-danger"><b><?php echo Fview_text(number_format($obj_order_view['ntotal'])); ?></b></td>											   </tr>										</tbody>									 </table>																	</div>							</div>						</div>							</div>					<div class="row">						<div class="col-md-12 col-sm-12 ">							<div class="x_panel">								<div class="x_title">									<h2></h2>									<ul class="nav navbar-right panel_toolbox">										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>									</ul>									<div class="clearfix"></div>								</div>								<div class="x_content">									<div class="form-group row">											<label class="col-form-label col-md-2 col-sm-3 ">Vận chuyển</label>											<div class="col-md-10 col-sm-9 ">												<?php //echo $gencbo_ship_type_list; 												if($obj_order_view['ccode_vtp']=='') { ?>												<input type="text" class="form-control" disabled="disabled" placeholder="" value="Tự vận chuyển">												<?php } else {													echo '<span class="text-danger">ViettelPost</span><br>';												?> 												<div style="padding:15px 0;">													<h6 style="border-bottom: 1px solid #fff;padding-bottom: 5px;font-size: 14px;">Hành trình vận đơn mã <strong class="text-danger"><?php echo $obj_order_view['ccode_vtp']; ?></strong></h6>													<ul class="timeline pb-3">														<li aria-expanded="false" class="event">														<div class="bold">														  <span class="text-color-viettel">Tạo đơn hàng														</div>														<!---->														<div class="ng-star-inserted">														  <!---->														  <div class="ng-star-inserted">															<span><?php //echo date("d/m/Y h:i:s",$data['ctime']); ?> <?php //echo $data['cnote']; ?></span>														  </div>														</div>														<!---->													  </li>														<?php $list = get_trip_by_order_vtp($obj_order_view['ccode_vtp']);														$count = count($list);														$i=1;														foreach($list as $data) { ?>													  <li aria-expanded="false" class="event <?php if($i==$count) echo 'txt-color-viettel active text-danger'; ?>">														<div class="bold">														  <span class="text-color-viettel"><?php echo $data['STATUS_NAME']; ?></span>														</div>														<!---->														<div class="ng-star-inserted">														  <!---->														  <div class="ng-star-inserted">															<span><?php echo $data['ORDER_STATUSDATE']; //echo date("d/m/Y h:i:s",$data['ctime']); ?> <?php echo $data['NOTE']; ?></span>														  </div>														</div>														<!---->													  </li>													  <?php $i++;} ?>													</ul>												</div>												<?php } ?>											</div>										</div>									<div class="form-group row">											<label class="col-form-label col-md-2 col-sm-3 ">Trạng thái đơn hàng</label>											<div class="col-md-10 col-sm-9 ">												<?php echo $gencbo_order_status_list; ?> 											</div>										</div>										<div class="form-group row">											<label class="col-form-label col-md-2 col-sm-3 ">Admin ghi chú</label>											<div class="col-md-10 col-sm-9 ">												<textarea class="form-control" rows="3" placeholder="" name="cadmin_note"><?php echo $cadmin_note; ?></textarea>											</div>										</div>																				<div class="ln_solid"></div>										<div class="form-group row">											<div class="col-md-10 col-sm-9 offset-md-2">												<input type="button" name="btn_submit" value ="<?php echo $btn_update; ?>" onclick ="js_SetSubmitButtonClick(this.form, this.name);" class="btn btn-primary"/>												<input name="btn_cancel"  type="button" 											   value = "<?php echo $btn_cancel; ?>"											   onclick="location.href='<?php echo $link_cancel; ?> '" class="btn btn-danger"/>											   											   <?php if($obj_order_view['ccode_vtp']=='') { ?>											   <a class="btn btn-danger btn-vtp" href="<?php echo base_url() . 'index.php/do_sell/vtp_order/' . $obj_order_view['ccode']; ?>" target="_blank"><img src="<?php echo base_url(); ?>images/logo_vtp_btn.png" style="width:22px;" /> Tạo đơn Viettelpost</a>											   <?php } ?>											</div>										</div>								</div>							</div>						</div>					</div>				</div>							</div>			</div><input name="hidden_nid" type="hidden" value = "<?php echo $nid; ?>"  /><input name="hidden_event" type="hidden" value = "<?php echo $event; ?>"  /><input type="hidden" name="hidden_button"  value = "" />	</form>
+<style>
+.table td, .table th {
+    vertical-align: middle !important;
+    padding: 0.65rem 0.75rem !important;
+}
+.order-detail-card {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.order-info-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0;
+}
+.order-price-highlight {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #d9534f;
+}
+</style>
+
+<form name='form_main' id="form_main" method="post" action="<?php echo $link_page; ?>" enctype="multipart/form-data">
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>CHI TIẾT ĐƠN HÀNG #<?php echo htmlspecialchars($obj_order_view['ccode']); ?></h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <!-- Cột trái: Thông tin khách hàng & giao hàng -->
+                <div class="col-md-6 col-sm-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><i class="fa fa-user"></i> Thông tin khách hàng & Giao hàng</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Mã đơn hàng</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" readonly value="<?php echo htmlspecialchars($obj_order_view['ccode']); ?>" style="font-weight:700;color:#0056b3;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Thời gian đặt</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" readonly value="<?php echo Fview_date($obj_order_view['ddate01']) . (!empty($obj_order_view['ctime01']) ? ' ' . $obj_order_view['ctime01'] : ''); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Họ và tên khách</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" readonly value="<?php echo htmlspecialchars($obj_order_view['cfullname']); ?>" style="font-weight:600;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Số điện thoại</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" readonly value="<?php echo htmlspecialchars($obj_order_view['cphone']); ?>" style="font-weight:600;color:#28a745;">
+                                        <?php if (!empty($obj_order_view['cphone'])): ?>
+                                        <div class="input-group-append">
+                                            <a href="tel:<?php echo $obj_order_view['cphone']; ?>" class="btn btn-outline-success" title="Gọi điện">
+                                                <i class="fa fa-phone"></i> Gọi
+                                            </a>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Địa chỉ nhận hàng</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <textarea class="form-control" readonly rows="2"><?php echo htmlspecialchars($obj_order_view['caddress']); ?></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Ghi chú của khách</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <textarea class="form-control" readonly rows="2" style="background:#fcfcfc;"><?php echo !empty($obj_order_view['cnote']) ? htmlspecialchars($obj_order_view['cnote']) : 'Không có ghi chú'; ?></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4 col-sm-4 order-info-label">Hình thức thanh toán</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="badge badge-info" style="font-size:13px;padding:6px 10px;">Giao hàng thu tiền tận nơi (COD)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Danh sách sản phẩm đặt mua -->
+                <div class="col-md-6 col-sm-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><i class="fa fa-shopping-basket"></i> Danh sách mặt hàng đặt mua</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <tr style="background:#f8f9fa;">
+                                            <th style="width:40px;text-align:center;">#</th>
+                                            <th>Sản phẩm</th>
+                                            <th style="width:110px;text-align:right;">Đơn giá</th>
+                                            <th style="width:60px;text-align:center;">SL</th>
+                                            <th style="width:120px;text-align:right;">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $i = 1;
+                                        $sum_total = 0;
+                                        if (!empty($obj_order_detail) && is_array($obj_order_detail)):
+                                            foreach($obj_order_detail as $data):
+                                                $prod_name = 'Sản phẩm #' . $data['nid_product'];
+                                                $prod = get_product_byid($data['nid_product']);
+                                                if (!empty($prod['cproducts'])) {
+                                                    $prod_name = $prod['cproducts'];
+                                                }
+
+                                                $unit_price = isset($data['cprice']) ? (float)$data['cprice'] : 0;
+                                                $qty = isset($data['nquantity']) ? (int)$data['nquantity'] : 1;
+                                                $line_total = $unit_price * $qty;
+                                                $sum_total += $line_total;
+                                        ?>
+                                        <tr>
+                                            <td style="text-align:center;"><?php echo $i; ?></td>
+                                            <td>
+                                                <strong style="color:#333;"><?php echo htmlspecialchars($prod_name); ?></strong>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <?php echo $unit_price > 0 ? number_format($unit_price, 0, ',', '.') . ' đ' : 'Liên hệ'; ?>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span class="badge badge-secondary" style="font-size:12px;"><?php echo $qty; ?></span>
+                                            </td>
+                                            <td style="text-align:right;font-weight:600;color:#2c3e50;">
+                                                <?php echo $line_total > 0 ? number_format($line_total, 0, ',', '.') . ' đ' : 'Liên hệ'; ?>
+                                            </td>
+                                        </tr>
+                                        <?php 
+                                            $i++;
+                                            endforeach;
+                                        endif; 
+                                        
+                                        $final_total = !empty($obj_order_view['ntotal']) ? (float)$obj_order_view['ntotal'] : $sum_total;
+                                        ?>
+                                        <tr style="background:#fff7f7;">
+                                            <td colspan="4" style="text-align:right;font-weight:700;font-size:14px;">
+                                                Tổng tiền thanh toán:
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <span class="order-price-highlight">
+                                                    <?php echo $final_total > 0 ? number_format($final_total, 0, ',', '.') . ' đ' : 'Liên hệ'; ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khung xử lý trạng thái đơn hàng & ghi chú Admin -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><i class="fa fa-cogs"></i> Xử lý & Cập nhật trạng thái đơn hàng</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-3 order-info-label">Trạng thái đơn hàng</label>
+                                <div class="col-md-6 col-sm-9">
+                                    <?php echo $gencbo_order_status_list; ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-3 order-info-label">Ghi chú quản trị</label>
+                                <div class="col-md-8 col-sm-9">
+                                    <textarea class="form-control" rows="3" name="cadmin_note" placeholder="Nhập ghi chú xử lý đơn hàng nội bộ (ví dụ: đã gọi khách, hẹn giao sáng mai...)"><?php echo htmlspecialchars($cadmin_note); ?></textarea>
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group row">
+                                <div class="col-md-10 col-sm-9 offset-md-2">
+                                    <input type="button" name="btn_submit" value="<?php echo $btn_update; ?>" onclick="js_SetSubmitButtonClick(this.form, this.name);" class="btn btn-primary" style="padding:8px 24px;font-weight:600;"/>
+                                    <input name="btn_cancel" type="button" value="<?php echo $btn_cancel; ?>" onclick="location.href='<?php echo $link_cancel; ?>'" class="btn btn-secondary" style="padding:8px 20px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input name="hidden_nid" type="hidden" value="<?php echo $nid; ?>" />
+    <input name="hidden_event" type="hidden" value="<?php echo $event; ?>" />
+    <input type="hidden" name="hidden_button" value="" />
+</form>

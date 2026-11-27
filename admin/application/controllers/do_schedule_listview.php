@@ -166,7 +166,7 @@ class do_schedule_listview extends CI_Controller
 		$data['txtf_service']       = $this->m_txtf_service;
 		
 		$data['data_view']          = $this->m_obj_data_view;
-		$data['menu']               = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu']               = Fget_menu_html($this->m_nid_user_login);
 		$data['menu_active']        = 'schedule';
 		$data['event']              = 'view';
 

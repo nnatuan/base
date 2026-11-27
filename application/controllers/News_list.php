@@ -94,8 +94,8 @@ class news_list extends CI_Controller
     }
     private function do_business()
     {
-        $slug_prefix = ($this->nid_cat == 2) ? 'giai-phap' : 'tin-tuc';
-        $page_title = ($this->nid_cat == 2) ? 'Giải pháp' : 'Tin tức';
+        $slug_prefix = ($this->nid_cat == 2) ? 'dich-vu' : 'tin-tuc';
+        $page_title  = ($this->nid_cat == 2) ? 'Dịch vụ thi công' : 'Tin tức';
 
         $data['slug_prefix']  = $slug_prefix;
         $data['page_title']   = $page_title;
@@ -113,7 +113,7 @@ class news_list extends CI_Controller
         $data['obj_news_list'] = $this->obj_news;
         $data['menu_sec']     = '';
         $data['menu_cat']     = '';
-        $data['menu_top']     = $slug_prefix;
+        $data['menu_top']     = ($this->nid_cat == 2) ? 'services' : 'news';
 
         $this->load->view('news_list', $data);
     }

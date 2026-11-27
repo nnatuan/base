@@ -95,7 +95,7 @@ class do_schedule extends CI_Controller
 		$data['link_page']   = $this->m_link_page;
 		$data['link_cancel'] = $this->m_link_cancel;
 		$data['event']       = 'edit';
-		$data['menu']        = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu']        = Fget_menu_html($this->m_nid_user_login);
 		$data['menu_active'] = 'schedule';
 
 		$this->load->view('schedule_view/index.php', $data);

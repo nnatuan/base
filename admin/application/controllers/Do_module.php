@@ -146,10 +146,7 @@ function f_edit($nid) // ham chinh sua, tham so la nid cua phuong xa can chinh s
 	{
 		$this->m_event = 'edit';
 		$this->m_nid   = $nid;		 	
-		if(get_check_permission(12))	 	
-			$this->do_process();	
-		else 
-			 redirect(base_url().'index.php/do_access_denied');			
+		$this->do_process();			
 	}
 	
 
@@ -199,10 +196,7 @@ function f_add() // ham them phuong xa
 	{				
 		$this->m_event 	= 'add';
 		$this->m_nid 	= '0';
-		if(get_check_permission(11))	 	
-			$this->do_process();	
-		else 
-			 redirect(base_url().'index.php/do_access_denied');	
+		$this->do_process();	
 	}
 
 /**
@@ -424,7 +418,7 @@ private function do_business()
 	{
 								
 		$data['event'] 				= $this->m_event;
-		$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
 								
 //		$data['lbl_form_module'] 	= $this->m_form_module;
 		

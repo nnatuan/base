@@ -8,21 +8,29 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	
-	config.extraPlugins = 'fontawesome';
+	config.extraPlugins = 'fontawesome,file-manager';
 	config.contentsCss = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
 	config.allowedContent = true; 
-	
-	config.extraPlugins = 'file-manager';
+
+	var getBaseRoot = function() {
+		if (window.BASC_BASE_URL) {
+			return window.BASC_BASE_URL;
+		}
+		var origin = window.location.origin || (window.location.protocol + "//" + window.location.host);
+		var path = window.location.pathname;
+		var adminIdx = path.toLowerCase().indexOf('/admin');
+		if (adminIdx !== -1) {
+			return origin + path.substring(0, adminIdx + 1);
+		}
+		return origin + '/';
+	};
+
+	var baseRoot = getBaseRoot();
 	
 	config.Flmngr = {
-		//apiKey: "qLuj8Be3",
 		apiKey: "FLMNFLMN",
-		urlFileManager: window.location.protocol+ "//"+window.location.host+"/flmngr/flmngr.php",
-		urlFiles: window.location.protocol+ "//"+window.location.host+ "/fileman/Uploads/"
-		//urlFileManager: window.location.protocol+ "//"+window.location.host+"/demo/apupi/flmngr/flmngr.php",
-		//urlFiles: window.location.protocol+ "//"+window.location.host+ "/demo/apupi/fileman/Uploads/"
-		//urlFileManager: window.location.protocol+ "//"+window.location.host+"/demo/demo_140/flmngr/flmngr.php",
-		//urlFiles: window.location.protocol+ "//"+window.location.host+ "/demo/demo_140/fileman/Uploads/"
+		urlFileManager: baseRoot + "flmngr/flmngr.php",
+		urlFiles: baseRoot + "fileman/Uploads/"
 	};
 
 	config.toolbar = [

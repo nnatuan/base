@@ -170,54 +170,33 @@
 	<?php 
 		$fr_img	= Fstr_replace(Fget_admin_folder(),'',base_url());
 	?>
-
+	<script>
+		window.BASC_BASE_URL = '<?php echo $fr_img; ?>';
+	</script>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $fr_img; ?>rgn_editor/editor_custom.css" />
 	<script src="<?php echo $fr_img; ?>rgn_editor/source_editor/ckeditor.js"></script>
 	<script>
-	var roxyFileman = '<?php echo $fr_img?>/fileman/index.html'; 
+	var roxyFileman = '<?php echo $fr_img?>fileman/index.html'; 
+	var flmngrConfig = {
+		apiKey: "FLMNFLMN",
+		urlFileManager: '<?php echo $fr_img; ?>flmngr/flmngr.php',
+		urlFiles: '<?php echo $fr_img; ?>fileman/Uploads/'
+	};
+	var defaultEditorOpts = {
+		filebrowserBrowseUrl: roxyFileman,
+		toolbar: 'Full',
+		height: '400px',
+		filebrowserImageBrowseUrl: roxyFileman + '?type=image',
+		removeDialogTabs: 'link:upload;image:upload',
+		Flmngr: flmngrConfig
+	};
 	$(function(){
-	   CKEDITOR.replace( 'editor1',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'});						
-
-		CKEDITOR.replace( 'editor2',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 						
-
-	
-		CKEDITOR.replace( 'editor3',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 					
-
-	
-		CKEDITOR.replace( 'editor4',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'});			
-
-	
-		CKEDITOR.replace( 'editor5',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 									
-	
-	
-		CKEDITOR.replace( 'editor6',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 
-		CKEDITOR.replace( 'editor7',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 
-		CKEDITOR.replace( 'editor8',{filebrowserBrowseUrl:roxyFileman,toolbar : 'Full',
-	height : '400px',
-									filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-									removeDialogTabs: 'link:upload;image:upload'}); 							
+		for (var i = 1; i <= 8; i++) {
+			if ($('#editor' + i).length > 0) {
+				CKEDITOR.replace('editor' + i, defaultEditorOpts);
+			}
+		}
 	});
 	
 

@@ -103,7 +103,16 @@ function __construct()
 		// Kiem tra dieu kien login theo ma so he thong 1.
 		$this->config->check_system_login = '1'; 
 		
+	}	
 
+	function f_delete($nid)
+	{
+		$nid = intval($nid);
+		if ($nid > 0) {
+			$this->order_model->delete_byid($nid);
+			$this->order_model->delete_order_detail_byid($nid);
+		}
+		redirect(base_url() . 'index.php/do_order_listview');
 	}	
 	
 /**
@@ -235,18 +244,12 @@ private function f_get_cookie($cookie_name)
  */		
 function index()
 	{				
-		if(get_check_permission(32))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+		$this->do_process();
 	}    
 function tmp()
 	{
 		$this->view_type = 'tmp';		
-		if(get_check_permission(32))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+		$this->do_process();
 	}			
 /**
  *-------------------------------------------------------------------
@@ -617,7 +620,7 @@ private function do_business()
 	
 		// Xac dinh mang du lieu de hien thi tren view
 		$data['data_view']      = $this->m_obj_data_view;
-		$data['menu'] 			= Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] 			= Fget_menu_html($this->m_nid_user_login);
 		
 		//Kiem tra neu la truong hop xuat excel thi chay ham goi export_excel va dung lai
 		if($this->m_event == 'excel')

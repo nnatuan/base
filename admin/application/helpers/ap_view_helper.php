@@ -20,8 +20,8 @@ function Vuser_view()
 	$str.=' concat(a.cfirstname, " " ,  a.cmiddlename, " " , a.clastname)	as cfullname 	,';	
 	$str.=' b.cuser_type 	as cisadmin_name,';
 	$str.=' a.cisadmin 	as cisadmin 		 ';
-	$str.=' FROM ' . Fget_ap_table('tuser') . ' as a , ' . Fget_ap_table('tuser_type') . ' as b';
-	$str.=' WHERE a.cdel="0" AND a.cisadmin=b.nid'; 
+	$str.=' FROM ' . Fget_ap_table('tuser') . ' as a LEFT JOIN ' . Fget_ap_table('tuser_type') . ' as b ON a.cisadmin=b.nid';
+	$str.=' WHERE a.cdel="0" '; 
 	$str.=' ) ';
 	$str.=' as view ';
 	return $str;
@@ -608,6 +608,7 @@ function Vorder()
     $str .= ' a.cemail				as cemail,';
     $str .= ' a.cphone				as cphone,';
     $str .= ' a.cnote					as cnote,';
+    $str .= ' a.ntotal				as ntotal,';
     $str .= ' a.nstatus				as nstatus,';
     $str .= ' a.niduser01				as niduser01 ,';
     $str .= ' a.niduser02				as niduser02 ,';
@@ -620,10 +621,9 @@ function Vorder()
 	$str .= ' a.ctype				as ctype, ';
 	$str .= ' a.vnp_TransactionStatus				as vnp_TransactionStatus, ';
     $str .= ' a.ddate02				as ddate02 ';
-    $str .= ' FROM ' . Fget_ap_table('torder') . ' as a ,';
-    $str .= '  ' . Fget_ap_table('torder_status') . ' as b ';
+    $str .= ' FROM ' . Fget_ap_table('torder') . ' as a ';
+    $str .= ' LEFT JOIN ' . Fget_ap_table('torder_status') . ' as b ON (a.nid_order_status = b.nid) ';
     $str .= ' WHERE a.nid is not null ';
-    $str .= ' AND a.nid_order_status = b.nid';
     $str .= ' ) ';
     $str .= ' as view ';
     return $str;

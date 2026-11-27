@@ -239,6 +239,12 @@ class home extends CI_Controller
         $data['about_metrics']  = $about_metrics;
         $data['faqs']           = $faqs;
 
+        // 6. Lấy danh sách banner slider từ base_tbanner_images
+        $this->db->where('nstatus', 1);
+        $this->db->order_by('cindex', 'ASC');
+        $banner_query = $this->db->get(Fget_ap_table('tbanner_images'));
+        $data['banners']        = ($banner_query && $banner_query->num_rows() > 0) ? $banner_query->result_array() : [];
+
         $this->load->view('home', $data);
     }
 

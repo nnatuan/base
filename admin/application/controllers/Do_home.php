@@ -106,7 +106,7 @@ private function do_business()
 		$data['user_fullname'] = Fget_userdata('session_user_full_name');
 		$data['user_encode'] = Obj_get_encode($str);
 		$data['user_decode'] = Obj_get_decode(Obj_get_encode($str));*/
-		$data['menu'] = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] = Fget_menu_html($this->m_nid_user_login);
 		$data['menu_active']	= 'home';
 		$data['event'] = $this->m_event;
 		

@@ -691,7 +691,7 @@ private function do_business()
 		$data['gencbo_cat_news_list']	= Fgen_html_combobox('', 'cbof_nid_cat_news', $this->m_cbof_nid_cat_news, '', $this->m_obj_cat_news_view, 'nid', 'ccat_news','submit','');
 		$data['gencbo_section_news_list']	= Fgen_html_combobox('', 'cbof_nid_section_news', $this->m_cbof_nid_section_news, '', $this->m_obj_section_news_view, 'nid', 'csection_news','submit','');
 		// Xac dinh thong tin menu
-		$data['menu'] = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] = Fget_menu_html($this->m_nid_user_login);
 		$data['gen_cbo_status']			= Fget_combobox_yes_no('','txtf_nstatus',$this->m_txtf_nstatus,'width:98%',$this->lang->line('lbl.0000.Yes'),$this->lang->line('lbl.0000.No'));
 		$data['gen_cbo_active']			= Fget_combobox_yes_no('','txtf_nactive',$this->m_txtf_nactive,'width:98%',$this->lang->line('lbl.0000.Yes'),$this->lang->line('lbl.0000.No'));
 				

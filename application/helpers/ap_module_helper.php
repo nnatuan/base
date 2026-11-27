@@ -148,8 +148,24 @@ function get_material_product_all()
 		$str_query .= ' AND nstatus = 1 ';
 		$str_query .= ' ORDER BY cindex+0 asc ';
 		$obj_result = $obj_helper->db->query($str_query);  
-		return $obj_result->result_array();
+		return $obj_result ? $obj_result->result_array() : [];
 	}
+
+if (!function_exists('get_cat_by_sec')) {
+function get_cat_by_sec($nid_sec)
+	{
+		$obj_helper =& get_instance(); 
+		$obj_helper->load->database();	
+		$str_query = ' SELECT *';
+		$str_query .= ' FROM '.Fget_ap_table('tcat_products').' as a ';
+		$str_query .= ' WHERE a.nid is not null ';
+		$str_query .= ' AND a.nstatus = 1 ';
+		$str_query .= ' AND a.nid_material_products = ' . (int)$nid_sec;
+		$str_query .= ' ORDER BY a.cindex+0 asc, a.nid asc ';
+		$obj_result = $obj_helper->db->query($str_query);  
+		return $obj_result ? $obj_result->result_array() : [];
+	}
+}
 function get_material_product_home()
 	{
 		$obj_helper =& get_instance(); 
@@ -3436,6 +3452,7 @@ function get_cat_product_home()
 		$obj_result = $obj_helper->db->query($str_query);  
 		return $obj_result->result_array();
 }
+if (!function_exists('get_cat_product_all')) {
 function get_cat_product_all()
 {
 		$obj_helper =& get_instance(); 
@@ -3446,7 +3463,8 @@ function get_cat_product_all()
 		$str_query .= ' AND a.nstatus =	1';	
 		$str_query .= ' ORDER BY a.cindex+0 asc, a.nid desc ';	
 		$obj_result = $obj_helper->db->query($str_query);  
-		return $obj_result->result_array();
+		return $obj_result ? $obj_result->result_array() : [];
+}
 }
 function get_product_preorder($limit)
 	{

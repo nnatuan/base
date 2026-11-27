@@ -45,7 +45,8 @@
 				  
 
 				  <li><a href="<?php echo base_url(); ?>index.php/do_article_listview"><i class="fa fa-pencil-square-o"></i> Quản Lý Bài Viết </a></li>
-					
+					<li><a href="<?php echo base_url(); ?>index.php/do_news_listview"><i class="fa fa-newspaper-o"></i> Quản Lý Tin Tức </a></li>	
+
 		
 				  <li><a><i class="fa fa-sitemap"></i> Quản Lý Sản Phẩm <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -59,9 +60,11 @@
                     </ul>
                   </li>
 
+				  <li><a href="<?php echo base_url(); ?>index.php/do_order_listview"><i class="fa fa-shopping-cart"></i> Quản Lý Đơn Hàng </a></li>
 				 
-					<li><a href="<?php echo base_url(); ?>index.php/do_news_listview"><i class="fa fa-newspaper-o"></i> Quản Lý Tin Tức </a></li>	
 					 <li><a href="<?php echo base_url(); ?>index.php/do_schedule_listview"><i class="fa fa-calendar-check-o"></i> Đặt Lịch Thi Công </a></li>
+
+				  <li><a href="<?php echo base_url(); ?>index.php/do_guide"><i class="fa fa-book"></i> Hướng Dẫn Sử Dụng </a></li>
                 </ul>
               </div>
               

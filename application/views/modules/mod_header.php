@@ -17,6 +17,8 @@ if ($cfg_logo !== '') {
 }
 
 $hotline_tel = preg_replace('/[^0-9+]/', '', $cfg_hotline);
+$current_menu = isset($menu_top) ? $menu_top : 'home';
+$is_home_page = ($current_menu === 'home');
 ?>
 <!-- Topbar thông tin liên hệ từ CSDL -->
 <div class="basc-topbar">
@@ -63,16 +65,18 @@ $hotline_tel = preg_replace('/[^0-9+]/', '', $cfg_hotline);
         </a>
 
         <nav class="basc-nav-links" aria-label="Điều hướng chính">
-            <a href="#best-sellers">Sản phẩm</a>
-            <a href="#categories">Danh mục</a>
-            <a href="#services">Dịch vụ thi công</a>
-            <a href="#why-choose-us">Ưu điểm</a>
-            <a href="#faqs">Hỏi đáp</a>
+            <a href="<?php echo base_url(); ?>" class="<?php echo ($current_menu === 'home') ? 'active' : ''; ?>">Trang chủ</a>
+            <a href="<?php echo base_url('gioi-thieu'); ?>" class="<?php echo ($current_menu === 'about') ? 'active' : ''; ?>">Giới thiệu</a>
+            <a href="<?php echo base_url('san-pham'); ?>" class="<?php echo ($current_menu === 'products' || $current_menu === 'product_detail') ? 'active' : ''; ?>">Sản phẩm</a>
+            <a href="<?php echo base_url('dich-vu'); ?>" class="<?php echo ($current_menu === 'services') ? 'active' : ''; ?>">Dịch vụ thi công</a>
+            <a href="<?php echo base_url('tin-tuc'); ?>" class="<?php echo ($current_menu === 'news') ? 'active' : ''; ?>">Tin tức</a>
+            <a href="<?php echo base_url('lien-he'); ?>" class="<?php echo ($current_menu === 'contact') ? 'active' : ''; ?>">Liên hệ</a>
         </nav>
 
         <div class="basc-nav-actions">
-            <a href="#final-cta" class="basc-icon-btn" title="Tư vấn & Tài khoản" aria-label="Tư vấn khách hàng">
-                <i class="fa-regular fa-user"></i>
+            <a href="<?php echo $is_home_page ? '#final-cta' : base_url() . '#final-cta'; ?>" class="btn-basc-schedule" title="Đặt lịch khảo sát">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Đặt Lịch Khảo Sát</span>
             </a>
             <button type="button" class="basc-icon-btn" id="basc-cart-btn" title="Giỏ hàng" aria-label="Giỏ hàng">
                 <i class="fa-solid fa-cart-shopping"></i>
@@ -95,13 +99,15 @@ $hotline_tel = preg_replace('/[^0-9+]/', '', $cfg_hotline);
             </button>
         </div>
         <div class="basc-mobile-links">
-            <a href="#best-sellers" class="basc-mobile-nav-link">Sản phẩm bán chạy</a>
-            <a href="#categories" class="basc-mobile-nav-link">Danh mục sản phẩm</a>
-            <a href="#services" class="basc-mobile-nav-link">Dịch vụ thi công ron gạch</a>
-            <a href="#why-choose-us" class="basc-mobile-nav-link">Tại sao chọn BASC</a>
-            <a href="#about-us" class="basc-mobile-nav-link">Về thương hiệu BASC</a>
-            <a href="#faqs" class="basc-mobile-nav-link">Câu hỏi thường gặp</a>
-            <a href="#final-cta" class="basc-mobile-nav-link">Nhận báo giá ngay</a>
+            <a href="<?php echo base_url(); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'home') ? 'active' : ''; ?>">Trang chủ</a>
+            <a href="<?php echo base_url('gioi-thieu'); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'about') ? 'active' : ''; ?>">Giới thiệu</a>
+            <a href="<?php echo base_url('san-pham'); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'products' || $current_menu === 'product_detail') ? 'active' : ''; ?>">Sản phẩm</a>
+            <a href="<?php echo base_url('dich-vu'); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'services') ? 'active' : ''; ?>">Dịch vụ thi công</a>
+            <a href="<?php echo base_url('tin-tuc'); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'news') ? 'active' : ''; ?>">Tin tức</a>
+            <a href="<?php echo base_url('lien-he'); ?>" class="basc-mobile-nav-link <?php echo ($current_menu === 'contact') ? 'active' : ''; ?>">Liên hệ</a>
+            <a href="<?php echo $is_home_page ? '#final-cta' : base_url() . '#final-cta'; ?>" class="basc-mobile-nav-link basc-mobile-schedule-link">
+                <i class="fa-solid fa-calendar-check"></i> Đặt lịch khảo sát
+            </a>
         </div>
         <div class="basc-mobile-contact">
             <?php if ($cfg_hotline !== ''): ?>

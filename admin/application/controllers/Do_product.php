@@ -94,10 +94,7 @@ class do_product extends CI_Controller
     {
         $this->m_event = 'edit';
         $this->m_nid   = $nid;
-        if(get_check_permission(24))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+        $this->do_process();
     }
     function f_update_edit()
     {
@@ -108,10 +105,7 @@ class do_product extends CI_Controller
     {
         $this->m_event = 'add';
         $this->m_nid   = '0';
-        if(get_check_permission(23))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+        $this->do_process();
     }
     function f_update_add()
     {
@@ -349,7 +343,7 @@ class do_product extends CI_Controller
     {
 		//
         $data['event']               = $this->m_event;
-        $data['menu']                = Fget_menu_html($this->m_nid_user_login);
+        //$data['menu']                = Fget_menu_html($this->m_nid_user_login);
         $data['lbl_form_title']      = $this->m_form_title;
         $data['link_page']           = $this->m_link_page;
         $data['link_cancel']         = $this->m_link_cancel;

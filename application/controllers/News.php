@@ -1,5 +1,5 @@
 <?php 
-class news extends CI_Controller {
+class News extends CI_Controller {
 
 var $event 				= '';
 var	$obj_news			= '';
@@ -223,10 +223,10 @@ private function do_business()
 	$data['menu_sec']		= '';
 	$data['menu_cat']		= '';
 	$data['g_ishome']		= 0;
-	if ($this->nid_cat == 1)
-        $data['menu_top'] = 'dichvu';
+	if ($this->nid_cat == 2)
+        $data['menu_top'] = 'services';
     else
-        $data['menu_top'] = 'tintuc';
+        $data['menu_top'] = 'news';
 	if($this->event == 'sec')
 		{
 		$data['ccode']		= $this->sec_news['ccode'];
@@ -257,8 +257,9 @@ private function do_business()
 		}
 	else if($this->event == 'detail')
 	{
-		$slug_prefix = ($this->nid_cat == 2) ? 'giai-phap' : 'tin-tuc';
-		$cat_title = ($this->nid_cat == 2) ? 'Giải pháp' : 'Tin tức';
+		$is_service = ($this->nid_cat == 2);
+		$slug_prefix = $is_service ? 'dich-vu' : 'tin-tuc';
+		$cat_title   = $is_service ? 'Dịch vụ' : 'Tin tức';
 
 		$data['slug_prefix'] = $slug_prefix;
 		$data['cat_title']   = $cat_title;
@@ -271,9 +272,12 @@ private function do_business()
 		$data['ccode']		= $this->m_nid;
 		$data['description']= $this->description;
 		$data['related_news'] = get_news_by_cat($this->nid_cat, 6, 1);
+		$data['menu_top']    = $is_service ? 'services' : 'news';
 	}
 	$data['view_folder']    = $this->view_folder;
-	$data['menu_top'] = (!empty($data['slug_prefix'])) ? $data['slug_prefix'] : 'news';
+	if (empty($data['menu_top'])) {
+		$data['menu_top'] = ($this->nid_cat == 2) ? 'services' : 'news';
+	}
 	
 	$this->load->view('news/index',$data);	
 	

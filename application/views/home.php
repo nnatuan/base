@@ -275,9 +275,144 @@ $fallback_faqs = [
     ],
 ];
 $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
+
+// Dữ liệu Banner Slider đầu trang chủ (Nạp từ base_tbanner_images hoặc Fallback thương hiệu BASC)
+$fallback_banners = [
+    [
+        'badge'      => 'BASC • CHUẨN CÔNG NGHỆ ĐỨC',
+        'title'      => 'KEO CHÀ RON EPOXY <span>2 THÀNH PHẦN</span> CAO CẤP',
+        'desc'       => 'Đường ron sáng bóng như men sứ, chống thấm 100%, kháng nấm mốc & không ố vàng trọn đời. Đầy đủ 24+ màu sắc thời thượng cho mọi loại gạch đá.',
+        'btn1_text'  => '<i class="fa-solid fa-bag-shopping"></i> Mua Vật Tư Ngay',
+        'btn1_link'  => base_url('san-pham'),
+        'btn2_text'  => '<i class="fa-solid fa-calendar-check"></i> Đặt Lịch Khảo Sát',
+        'btn2_link'  => '#final-cta',
+        'bg_style'   => 'background: radial-gradient(circle at 70% 40%, #8C0501 0%, #4A0200 45%, #0F172A 100%);',
+    ],
+    [
+        'badge'      => 'DỊCH VỤ THI CÔNG TRỌN GÓI',
+        'title'      => 'CẢI TẠO & PHỤC HỒI <span>RON GẠCH CŨ</span> TRONG NGÀY',
+        'desc'       => 'Nạo vét cắt rãnh hút bụi sạch sẽ không ồn không bụi mịn. Bắn keo mới chuẩn thợ cho nhà ở, biệt thự, căn hộ và hồ bơi. Bảo hành màu sắc lên đến 10 năm.',
+        'btn1_text'  => '<i class="fa-solid fa-helmet-safety"></i> Xem Dịch Vụ',
+        'btn1_link'  => base_url('dich-vu'),
+        'btn2_text'  => '<i class="fa-solid fa-phone-volume"></i> Tư Vấn Miễn Phí',
+        'btn2_link'  => base_url('lien-he'),
+        'bg_style'   => 'background: radial-gradient(circle at 30% 50%, #15803D 0%, #064E3B 40%, #0F172A 100%);',
+    ],
+    [
+        'badge'      => 'VẬT TƯ & DỤNG CỤ CHUYÊN DỤNG',
+        'title'      => 'TRỌN BỘ CÔNG CỤ <span>THI CÔNG RON</span> CHUẨN THỢ',
+        'desc'       => 'Cung cấp súng trợ lực đôi hợp kim, vòi trộn xoắn tự động 24 tầng, bộ bi cầu vê ron và dao cạo sủi ron cao cấp. Chiết khấu cao cho nhà thầu & đại lý.',
+        'btn1_text'  => '<i class="fa-solid fa-toolbox"></i> Khám Phá Dụng Cụ',
+        'btn1_link'  => base_url('san-pham'),
+        'btn2_text'  => '<i class="fa-solid fa-file-invoice-dollar"></i> Nhận Báo Giá Sỉ',
+        'btn2_link'  => base_url('lien-he'),
+        'bg_style'   => 'background: radial-gradient(circle at 65% 50%, #B45309 0%, #78350F 40%, #0F172A 100%);',
+    ],
+];
+
+$render_banners = [];
+if (!empty($banners)) {
+    foreach ($banners as $idx => $b) {
+        $img_src = '';
+        if (!empty($b['cimage'])) {
+            if (file_exists(FCPATH . 'upload/banner/' . $b['cimage'])) {
+                $img_src = base_url('upload/banner/' . $b['cimage']);
+            } elseif (file_exists(FCPATH . 'upload/images_banner/' . $b['cimage'])) {
+                $img_src = base_url('upload/images_banner/' . $b['cimage']);
+            } elseif (file_exists(FCPATH . 'upload/fb/' . $b['cimage'])) {
+                $img_src = base_url('upload/fb/' . $b['cimage']);
+            } elseif (file_exists(FCPATH . 'upload/' . $b['cimage'])) {
+                $img_src = base_url('upload/' . $b['cimage']);
+            } elseif (file_exists(FCPATH . 'images/' . $b['cimage'])) {
+                $img_src = base_url('images/' . $b['cimage']);
+            }
+        }
+        $default_gradients = [
+            'background: radial-gradient(circle at 70% 40%, #8C0501 0%, #4A0200 45%, #0F172A 100%);',
+            'background: radial-gradient(circle at 30% 50%, #15803D 0%, #064E3B 40%, #0F172A 100%);',
+            'background: radial-gradient(circle at 65% 50%, #B45309 0%, #78350F 40%, #0F172A 100%);'
+        ];
+        $bg_style = ($img_src !== '') 
+            ? 'background-image: url(' . $img_src . ');' 
+            : $default_gradients[$idx % 3];
+
+        $link_btn1 = base_url('san-pham');
+        $text_btn1 = '<i class="fa-solid fa-bag-shopping"></i> Mua Vật Tư Ngay';
+        if (!empty($b['ctag'])) {
+            $link_btn1 = (strpos($b['ctag'], 'http') === 0 || strpos($b['ctag'], '#') === 0) ? $b['ctag'] : base_url($b['ctag']);
+            if (strpos($b['ctag'], 'dich-vu') !== false) {
+                $text_btn1 = '<i class="fa-solid fa-helmet-safety"></i> Xem Dịch Vụ';
+            }
+        }
+
+        $render_banners[] = [
+            'badge'     => !empty($b['ccode']) ? $b['ccode'] : 'BASC • Keo Ron Cao Cấp',
+            'title'     => !empty($b['cbanner_images']) ? $b['cbanner_images'] : 'Keo Ron Epoxy Chuyên Nghiệp',
+            'desc'      => !empty($b['cnote']) ? $b['cnote'] : '',
+            'btn1_text' => $text_btn1,
+            'btn1_link' => $link_btn1,
+            'btn2_text' => '<i class="fa-solid fa-calendar-check"></i> Đặt Lịch Khảo Sát',
+            'btn2_link' => '#final-cta',
+            'bg_style'  => $bg_style,
+        ];
+    }
+}
+if (empty($render_banners)) {
+    $render_banners = $fallback_banners;
+}
 ?>
 
 <main>
+    <!-- 0. HERO SLIDER ĐẦU TRANG CHỦ (TỰ ĐỘNG CHẠY / NẠP TỪ base_tbanner_images) -->
+    <section class="basc-hero-slider" id="basc-hero-slider">
+        <div class="basc-slider-container">
+            <div class="basc-slider-track">
+                <?php foreach ($render_banners as $idx => $slide): ?>
+                <div class="basc-slide <?php echo ($idx === 0) ? 'is-active' : ''; ?>" data-slide-index="<?php echo $idx; ?>">
+                    <div class="basc-slide-bg" style="<?php echo $slide['bg_style']; ?>">
+                        <div class="basc-slide-overlay"></div>
+                    </div>
+                    <div class="basc-container basc-slide-content-wrap">
+                        <div class="basc-slide-content">
+                            <?php if (!empty($slide['badge'])): ?>
+                                <div class="basc-slide-badge">
+                                    <i class="fa-solid fa-certificate"></i> <?php echo htmlspecialchars($slide['badge']); ?>
+                                </div>
+                            <?php endif; ?>
+                            <h2 class="basc-slide-title"><?php echo $slide['title']; ?></h2>
+                            <?php if (!empty($slide['desc'])): ?>
+                                <p class="basc-slide-desc"><?php echo htmlspecialchars($slide['desc']); ?></p>
+                            <?php endif; ?>
+                            <div class="basc-slide-cta-row">
+                                <a href="<?php echo $slide['btn1_link']; ?>" class="btn-basc btn-basc-cta">
+                                    <?php echo $slide['btn1_text']; ?>
+                                </a>
+                                <a href="<?php echo $slide['btn2_link']; ?>" class="btn-basc btn-basc-outline-white">
+                                    <?php echo $slide['btn2_text']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Nút Next / Prev -->
+            <button type="button" class="basc-slider-arrow basc-slider-prev" aria-label="Slide trước">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button type="button" class="basc-slider-arrow basc-slider-next" aria-label="Slide tiếp theo">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Chấm tròn chuyển slide -->
+            <div class="basc-slider-dots">
+                <?php foreach ($render_banners as $idx => $slide): ?>
+                    <button type="button" class="basc-slider-dot <?php echo ($idx === 0) ? 'is-active' : ''; ?>" data-slide="<?php echo $idx; ?>" aria-label="Đến slide <?php echo $idx + 1; ?>"></button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
     <!-- 1. HERO SECTION (NẠP TỪ base_tmodule) -->
     <section class="basc-hero">
         <div class="basc-container basc-hero-grid">
@@ -300,7 +435,7 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                 </ul>
 
                 <div class="basc-hero-cta">
-                    <a href="#best-sellers" class="btn-basc btn-basc-cta">
+                    <a href="<?php echo base_url('san-pham'); ?>" class="btn-basc btn-basc-cta">
                         <i class="fa-solid fa-bag-shopping"></i> Mua Vật Tư Ngay
                     </a>
                     <a href="#final-cta" class="btn-basc btn-basc-outline">
@@ -385,20 +520,36 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                         $group = 'dung-cu-thi-cong';
                     }
                     $badge = !empty($item['ctag']) ? $item['ctag'] : 'Chính hãng';
-                    $icon  = !empty($item['cimage']) ? $item['cimage'] : 'fa-fill-drip';
-                    if (strpos($icon, 'fa-') === false) {
-                        $icon = 'fa-fill-drip';
+
+                    // Kiểm tra file ảnh tồn tại trên server
+                    $has_img = false;
+                    $img_src = '';
+                    if (!empty($item['cimage_resize']) && file_exists(FCPATH . 'upload/images_product/resize_images/' . $item['cimage_resize'])) {
+                        $img_src = base_url() . 'upload/images_product/resize_images/' . $item['cimage_resize'];
+                        $has_img = true;
+                    } elseif (!empty($item['cimage']) && file_exists(FCPATH . 'upload/images_product/full_images/' . $item['cimage'])) {
+                        $img_src = base_url() . 'upload/images_product/full_images/' . $item['cimage'];
+                        $has_img = true;
                     }
+
+                    $detail_url = base_url() . 'san-pham/' . $item['ccode'];
+                    $icon = 'fa-box-open';
                     $rating_val = !empty($item['cloai_tin']) ? $item['cloai_tin'] : '4.9 (250)';
                     $price_sale = isset($item['fprice_sale']) ? (float)$item['fprice_sale'] : 0;
                     $price_old  = isset($item['fprice']) ? (float)$item['fprice'] : 0;
                     $price_str  = $price_sale > 0 ? number_format($price_sale, 0, ',', '.') . 'đ' : 'Liên hệ';
                     $old_str    = $price_old > $price_sale ? number_format($price_old, 0, ',', '.') . 'đ' : '';
+                    $prod_id    = !empty($item['nid']) ? (int)$item['nid'] : 0;
+                    $prod_price = $price_sale > 0 ? $price_sale : ($price_old > 0 ? $price_old : 0);
                 ?>
-                <article class="basc-product-card" data-group="<?php echo htmlspecialchars($group); ?>">
+                <article class="basc-product-card" data-group="<?php echo htmlspecialchars($group); ?>" onclick="window.location.href='<?php echo $detail_url; ?>';">
                     <span class="basc-product-badge"><?php echo htmlspecialchars($badge); ?></span>
                     <div class="basc-product-thumb">
-                        <i class="fa-solid <?php echo htmlspecialchars($icon); ?>"></i>
+                        <?php if ($has_img): ?>
+                            <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($item['cproducts']); ?>" loading="lazy">
+                        <?php else: ?>
+                            <i class="fa-solid fa-box-open"></i>
+                        <?php endif; ?>
                     </div>
                     <div class="basc-product-rating">
                         <span class="basc-stars">
@@ -406,7 +557,11 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                         </span>
                         <span><?php echo htmlspecialchars($rating_val); ?></span>
                     </div>
-                    <h3 class="basc-product-name"><?php echo htmlspecialchars($item['cproducts']); ?></h3>
+                    <h3 class="basc-product-name">
+                        <a href="<?php echo $detail_url; ?>" class="basc-product-name-link" onclick="event.stopPropagation();">
+                            <?php echo htmlspecialchars($item['cproducts']); ?>
+                        </a>
+                    </h3>
                     <p class="basc-product-desc"><?php echo htmlspecialchars($item['cdescription']); ?></p>
                     <div class="basc-product-price-row">
                         <span class="basc-price-now"><?php echo $price_str; ?></span>
@@ -414,7 +569,13 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                             <span class="basc-price-old"><?php echo $old_str; ?></span>
                         <?php endif; ?>
                     </div>
-                    <button type="button" class="basc-add-btn js-add-cart" data-name="<?php echo htmlspecialchars($item['cproducts']); ?>">
+                    <button type="button" class="basc-add-btn js-add-cart" 
+                        data-id="<?php echo $prod_id; ?>" 
+                        data-name="<?php echo htmlspecialchars($item['cproducts']); ?>" 
+                        data-price="<?php echo $prod_price; ?>" 
+                        data-price-str="<?php echo $price_str; ?>" 
+                        data-icon="<?php echo htmlspecialchars($icon); ?>"
+                        onclick="event.stopPropagation();">
                         <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
                     </button>
                 </article>
@@ -432,8 +593,8 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                 <p class="section-subtitle basc-cat-intro-subtitle">
                     <?php echo htmlspecialchars($mod('sec_categories', 'cnote', 'Cung cấp đồng bộ từ keo chà ron Epoxy 2 thành phần đến súng bắn keo, vòi trộn xoắn, bi cầu miết ron và dao sủi chuyên dụng.')); ?>
                 </p>
-                <a href="#final-cta" class="btn-basc btn-basc-primary">
-                    <?php echo htmlspecialchars($mod('sec_categories', 'clink', 'Nhận bảng giá sỉ & lẻ')); ?> <i class="fa-solid fa-arrow-right"></i>
+                <a href="<?php echo base_url('san-pham'); ?>" class="btn-basc btn-basc-primary">
+                    <?php echo htmlspecialchars($mod('sec_categories', 'clink', 'Xem Tất Cả Sản Phẩm')); ?> <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
 
@@ -487,7 +648,10 @@ $render_faqs = !empty($faqs) ? $faqs : $fallback_faqs;
                 <?php endforeach; ?>
             </div>
 
-            <div class="basc-text-center basc-mt-md">
+            <div class="basc-text-center basc-mt-md" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+                <a href="<?php echo base_url('dich-vu'); ?>" class="btn-basc btn-basc-primary">
+                    <i class="fa-solid fa-list-check"></i> Xem Tất Cả Dịch Vụ
+                </a>
                 <a href="#final-cta" class="btn-basc btn-basc-cta">
                     <i class="fa-solid fa-calendar-check"></i> <?php echo htmlspecialchars($mod('sec_services', 'clink', 'Đặt Lịch Khảo Sát & Báo Giá Thi Công Miễn Phí')); ?>
                 </a>

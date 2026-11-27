@@ -22,4 +22,10 @@ $route['giai-phap']                                             = "news_list/cat
 $route['giai-phap/trang-(:num)']                                = "news_list/cat_page/2/$1";
 $route['giai-phap/([a-zA-Z0-9-_]+)']                            = "news/detail/$1";
 
+$route['cart/checkout']  = "cart/checkout";
 $route['hoan-tat-dat-hang']  = "complete_cart";
+
+$route['lien-he']                                               = "contact";
+$route['dich-vu']                                               = "news_list/cat_page/2/1";
+$route['dich-vu/trang-(:num)']                                  = "news_list/cat_page/2/$1";
+$route['dich-vu/([a-zA-Z0-9-_]+)']                              = "news/detail/$1";

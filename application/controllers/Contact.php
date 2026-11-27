@@ -1,5 +1,5 @@
 <?php
-class contact extends CI_Controller
+class Contact extends CI_Controller
 {
     var $data_view = '';
     var $title = '';

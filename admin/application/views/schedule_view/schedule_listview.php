@@ -61,7 +61,7 @@
 											<th style="width:140px;">Lịch hẹn</th>
 											<th style="width:150px;text-align:center;">Trạng thái</th>
 											<th style="width:110px;text-align:center;">Ngày tạo</th>
-											<th style="width:90px;text-align:center;">Thao tác</th>
+											<th style="width:110px;text-align:center;">Thao tác</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -119,9 +119,11 @@
 											<td style="text-align:center;font-size:12px;color:#666;">
 												<?php echo date('d/m/Y H:i', strtotime($row['ddate01'])); ?>
 											</td>
-											<td style="text-align:center;">
-												<a href="<?php echo base_url() . 'index.php/do_schedule/f_edit/' . $row['nid']; ?>" class="btn btn-sm btn-outline-primary" title="Chi tiết & Xử lý"><i class="fa fa-pencil"></i></a>
-												<a href="<?php echo base_url() . 'index.php/do_schedule/f_delete/' . $row['nid']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch hẹn này?');" class="btn btn-sm btn-outline-danger" title="Xóa"><i class="fa fa-trash"></i></a>
+											<td style="text-align:center;white-space:nowrap;">
+												<div style="display:inline-flex;gap:6px;align-items:center;justify-content:center;">
+													<a href="<?php echo base_url() . 'index.php/do_schedule/f_edit/' . $row['nid']; ?>" class="btn btn-sm btn-outline-primary" title="Chi tiết & Xử lý" style="padding:4px 8px;border-radius:4px;"><i class="fa fa-pencil"></i></a>
+													<a href="<?php echo base_url() . 'index.php/do_schedule/f_delete/' . $row['nid']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch hẹn này?');" class="btn btn-sm btn-outline-danger" title="Xóa" style="padding:4px 8px;border-radius:4px;"><i class="fa fa-trash"></i></a>
+												</div>
 											</td>
 										</tr>
 										<?php $i++; endforeach; ?>

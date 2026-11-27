@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-class product_detail extends CI_Controller
+class Product_detail extends CI_Controller
 {
     var $g_nid_session = '';
     var $g_nid_user = '';

@@ -19,8 +19,8 @@
 							<div class="x_panel">
 								
 								<div class="container">
-									<div class="d-flex align-items-center justify-content-center" style="width:860px;margin:0 auto;height:calc(100vh - 130px);">
-									<div class="row d-flex align-items-center justify-content-center h100">
+									<div class="d-flex align-items-center justify-content-center" style="width:860px;margin:30px auto;min-height:calc(100vh - 180px);">
+									<div class="row d-flex align-items-center justify-content-center h100" style="width: 100%;">
 								
 										<div class="col-md-6">
 											<div class="order-box" style="padding:20px;background: #E3F6FF;" onclick='location.href="<?php echo base_url(); ?>index.php/do_config_listview"'>
@@ -90,6 +90,30 @@
 													<div>
 														<h5><strong>QUẢN LÝ TIN TỨC</strong></h5>
 														<p class="mg0">Cập nhật tin tức mới lên Website</p>
+													</div>
+												</div>					
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="order-box" style="padding:20px;background: #E0F4FF;" onclick='location.href="<?php echo base_url(); ?>index.php/do_schedule_listview"'>
+												<div class="d-flex">	
+													<div style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#fff;border-radius:5px;margin-right:10px;font-size:24px;"><i class="fa fa-calendar-check-o"></i></div>
+													<div>
+														<h5><strong style="color:#0284c7;">ĐẶT LỊCH THI CÔNG</strong></h5>
+														<p class="mg0">Tiếp nhận yêu cầu khảo sát từ khách hàng</p>
+													</div>
+												</div>					
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="order-box" style="padding:20px;background: #fdf2f2;border:1px solid #fecaca;" onclick='location.href="<?php echo base_url(); ?>index.php/do_guide"'>
+												<div class="d-flex">	
+													<div style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:#8C0501;color:#fff;border-radius:5px;margin-right:10px;font-size:24px;"><i class="fa fa-book"></i></div>
+													<div>
+														<h5><strong style="color:#8C0501;">HƯỚNG DẪN SỬ DỤNG</strong></h5>
+														<p class="mg0">Tài liệu hướng dẫn vận hành website trực quan</p>
 													</div>
 												</div>					
 											</div>

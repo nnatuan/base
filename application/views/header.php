@@ -58,7 +58,7 @@
       <meta name="robots" content="INDEX, FOLLOW"/>
       <meta name="robots" content="NOODP, NOYDIR"/>
       <link rel="icon" href="<?php echo base_url(); ?>images/logo.svg" type="image/svg+xml">
-      <link rel="alternate icon" href="<?php echo base_url(); ?>favicon.png" type="image/x-icon">
+      <link rel="alternate icon" href="<?php echo base_url(); ?>favicon.ico" type="image/x-icon">
 
 	  <link rel="preconnect" href="https://fonts.googleapis.com">
 	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

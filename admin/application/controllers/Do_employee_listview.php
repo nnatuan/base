@@ -183,10 +183,7 @@ function f_export()
 function index()
 	{	
 		$this->m_event='view';
-		if(get_check_permission(4))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');		
+		$this->do_process();
 	}    
 			
 /**
@@ -530,7 +527,7 @@ private function do_business()
 				$data['txtf_cnote']    		= $this->m_txtf_cnote;
 		
 				// Xac dinh thong tin menu
-				$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
+				//$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
 				// Load view tuong ung voi su kien m_event.
 				$data['event'] 				= $this->m_event;				
 				$data['gencbo_user_type']	= Fgen_html_combobox('', 'txtf_cisadmin', $this->m_txtf_cisadmin, '', $this->m_obj_user_type_view, 'nid', 'cuser_type','nosubmit');

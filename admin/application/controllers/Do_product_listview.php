@@ -443,10 +443,7 @@ function f_flash_sale($nid,$check)
  */		
 function index()
 	{				
-		if(get_check_permission(22))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+		$this->do_process();
 	}    
 			
 /**
@@ -858,7 +855,7 @@ private function do_business()
 
 		// Xac dinh mang du lieu de hien thi tren view
 		$data['data_view']         				= $this->m_obj_data_view;
-		$data['menu'] = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] = Fget_menu_html($this->m_nid_user_login);
 		
 		//Kiem tra neu la truong hop xuat excel thi chay ham goi export_excel va dung lai
 		

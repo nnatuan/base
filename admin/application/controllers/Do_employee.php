@@ -283,7 +283,7 @@ private function caculate_data()
 private function do_business()
 	{								
 		$data['event'] 				= $this->m_event;
-		$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] 				= Fget_menu_html($this->m_nid_user_login);
 								
 		$data['lbl_form_title'] 	= $this->m_form_title;
 		

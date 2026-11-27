@@ -242,10 +242,7 @@ private function f_get_cookie($cookie_name)
  */		
 function index()
 	{				
-		if(get_check_permission(13))
-			$this->do_process();
-		else 
-			redirect(base_url().'index.php/do_access_denied');
+		$this->do_process();
 	}    
 			
 /**
@@ -621,7 +618,7 @@ private function do_business()
 		//load object combobox
 		
 		// Xac dinh thong tin menu
-		$data['menu'] = Fget_menu_html($this->m_nid_user_login);
+		//$data['menu'] = Fget_menu_html($this->m_nid_user_login);
 		$data['gen_cbo_status']			= Fget_combobox_yes_no('','txtf_nstatus',$this->m_txtf_nstatus,'width:98%',$this->lang->line('lbl.0000.Yes'),$this->lang->line('lbl.0000.No'));
 				
 		
